@@ -2,8 +2,7 @@ class RoomsController < ApplicationController
   before_action :set_room, only: [:show, :update, :destroy]
 
   def index
-    @rooms = current_user.rooms
-    json_response(@rooms)
+    json_response(user_rooms)
   end
 
   def create
@@ -33,5 +32,12 @@ class RoomsController < ApplicationController
 
   def set_room
     @room = Room.find(params[:id])
+  end
+
+  def user_rooms
+    {
+      rooms: current_user.rooms,
+      member_rooms: current_user.member_rooms
+    }
   end
 end

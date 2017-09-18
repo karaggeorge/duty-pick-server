@@ -28,7 +28,7 @@ class MembersController < ApplicationController
   private
 
   def member_params
-    params.permit(:name, :order)
+    params.permit(:name, :order, :user_id)
   end
 
   def set_room

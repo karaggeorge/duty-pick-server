@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170913213802) do
+ActiveRecord::Schema.define(version: 20170918173808) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "dates", force: :cascade do |t|
+    t.date "date"
+    t.bigint "room_id"
+    t.integer "slots"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["room_id"], name: "index_dates_on_room_id"
+  end
 
   create_table "members", force: :cascade do |t|
     t.string "name"
@@ -21,7 +30,19 @@ ActiveRecord::Schema.define(version: 20170913213802) do
     t.bigint "room_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
     t.index ["room_id"], name: "index_members_on_room_id"
+    t.index ["user_id"], name: "index_members_on_user_id"
+  end
+
+  create_table "picks", force: :cascade do |t|
+    t.bigint "member_id"
+    t.bigint "date_id"
+    t.boolean "confirmed", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["date_id"], name: "index_picks_on_date_id"
+    t.index ["member_id"], name: "index_picks_on_member_id"
   end
 
   create_table "rooms", force: :cascade do |t|
@@ -29,6 +50,11 @@ ActiveRecord::Schema.define(version: 20170913213802) do
     t.string "created_by"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "active", default: false
+    t.bigint "picking_member_id"
+    t.bigint "moderator_id"
+    t.index ["moderator_id"], name: "index_rooms_on_moderator_id"
+    t.index ["picking_member_id"], name: "index_rooms_on_picking_member_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -41,5 +67,8 @@ ActiveRecord::Schema.define(version: 20170913213802) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "dates", "rooms"
   add_foreign_key "members", "rooms"
+  add_foreign_key "picks", "dates"
+  add_foreign_key "picks", "members"
 end
