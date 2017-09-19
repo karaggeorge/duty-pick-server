@@ -1,4 +1,4 @@
-class MembersController < ApplicationController
+class API::MembersController < ApplicationController
   before_action :set_room
   before_action :set_member, only: [:show, :update, :destroy]
 

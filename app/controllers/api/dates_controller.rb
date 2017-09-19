@@ -1,4 +1,4 @@
-class DatesController < ApplicationController
+class API::DatesController < ApplicationController
   before_action :set_room
   before_action :set_date, only: [:show, :update, :destroy]
 

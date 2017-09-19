@@ -1,4 +1,4 @@
-class RoomsController < ApplicationController
+class API::RoomsController < ApplicationController
   before_action :set_room, only: [:show, :update, :destroy]
 
   def index
