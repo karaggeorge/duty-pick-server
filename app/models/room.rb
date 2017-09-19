@@ -1,6 +1,6 @@
 class Room < ApplicationRecord
   has_many :members, dependent: :destroy
-  has_many :dates, dependent: :destroy
+  has_many :duties, dependent: :destroy
   belongs_to :moderator, class_name: "User"
   belongs_to :picking_member, class_name: "Member", optional: true
 

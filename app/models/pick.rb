@@ -1,4 +1,4 @@
 class Pick < ApplicationRecord
   belongs_to :member
-  belongs_to :date
+  belongs_to :duty
 end

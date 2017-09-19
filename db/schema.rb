@@ -10,18 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170918173808) do
+ActiveRecord::Schema.define(version: 20170919195704) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "dates", force: :cascade do |t|
+  create_table "duties", force: :cascade do |t|
     t.date "date"
     t.bigint "room_id"
     t.integer "slots"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["room_id"], name: "index_dates_on_room_id"
+    t.index ["room_id"], name: "index_duties_on_room_id"
   end
 
   create_table "members", force: :cascade do |t|
@@ -37,11 +37,11 @@ ActiveRecord::Schema.define(version: 20170918173808) do
 
   create_table "picks", force: :cascade do |t|
     t.bigint "member_id"
-    t.bigint "date_id"
+    t.bigint "duty_id"
     t.boolean "confirmed", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["date_id"], name: "index_picks_on_date_id"
+    t.index ["duty_id"], name: "index_picks_on_duty_id"
     t.index ["member_id"], name: "index_picks_on_member_id"
   end
 
@@ -67,8 +67,8 @@ ActiveRecord::Schema.define(version: 20170918173808) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "dates", "rooms"
+  add_foreign_key "duties", "rooms"
   add_foreign_key "members", "rooms"
-  add_foreign_key "picks", "dates"
+  add_foreign_key "picks", "duties"
   add_foreign_key "picks", "members"
 end
